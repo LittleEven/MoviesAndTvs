@@ -13,7 +13,7 @@ import java.util.List;
 
 public class HomeBean {
     private List<BannerBean> mBanners = new ArrayList<>();//首页轮播图
-    private List<RecommondBean> mRecommondBeens = new ArrayList<>();//推荐资源
+    private List<RecommendBean> mRecommondBeens = new ArrayList<>();//推荐资源
 
     public List<BannerBean> getBanners() {
         return mBanners;
@@ -24,7 +24,7 @@ public class HomeBean {
         return this;
     }
 
-    public HomeBean setRecommondBeens(List<RecommondBean> recommondBeens) {
+    public HomeBean setRecommondBeens(List<RecommendBean> recommondBeens) {
         mRecommondBeens = recommondBeens;
         return this;
     }

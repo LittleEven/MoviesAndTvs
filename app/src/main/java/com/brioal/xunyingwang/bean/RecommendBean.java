@@ -7,20 +7,20 @@ package com.brioal.xunyingwang.bean;
  * Created by Brioal on 2017/7/27.
  */
 
-public class RecommondBean {
+public class RecommendBean {
     private String mId= "";//电影的ID
     private String mPicUrl = "";//图片链接
     private String mName = "";//图片名字
 
 
-    public RecommondBean() {
+    public RecommendBean() {
     }
 
     public String getId() {
         return mId;
     }
 
-    public RecommondBean setId(String id) {
+    public RecommendBean setId(String id) {
         mId = id;
         return this;
     }
@@ -29,7 +29,7 @@ public class RecommondBean {
         return mPicUrl;
     }
 
-    public RecommondBean setPicUrl(String picUrl) {
+    public RecommendBean setPicUrl(String picUrl) {
         mPicUrl = picUrl;
         return this;
     }
@@ -38,7 +38,7 @@ public class RecommondBean {
         return mName;
     }
 
-    public RecommondBean setName(String name) {
+    public RecommendBean setName(String name) {
         mName = name;
         return this;
     }

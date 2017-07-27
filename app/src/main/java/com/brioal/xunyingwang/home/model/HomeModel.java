@@ -2,7 +2,9 @@ package com.brioal.xunyingwang.home.model;
 
 import com.brioal.bannerview.BannerBean;
 import com.brioal.xunyingwang.bean.HomeBean;
-import com.brioal.xunyingwang.bean.RecommondBean;
+import com.brioal.xunyingwang.bean.MovieBean;
+import com.brioal.xunyingwang.bean.RecommendBean;
+import com.brioal.xunyingwang.bean.TVBean;
 import com.brioal.xunyingwang.home.contract.HomeContract;
 import com.socks.library.KLog;
 
@@ -48,7 +50,7 @@ public class HomeModel implements HomeContract.Model {
             public void onResponse(Call call, Response response) throws IOException {
                 String content = response.body().string();
                 HomeBean homeBean = new HomeBean();
-                KLog.e(content);
+                KLog.d(content);
                 try {
                     Document document = Jsoup.parse(content);
                     //解析轮播图
@@ -56,7 +58,7 @@ public class HomeModel implements HomeContract.Model {
                             .setRecommondBeens(getRecommonds(document))//解析推荐资源
 
                     ;
-
+                    getNewScience(document);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -66,13 +68,257 @@ public class HomeModel implements HomeContract.Model {
     }
 
     /**
+     * 返回最新科幻片
+     * @param mainDocuments
+     * @return
+     */
+    private List<MovieBean> getNewScience(Document mainDocuments) {
+        List<MovieBean> list = new ArrayList<>();
+        Element document = mainDocuments.getElementsByClass("col-xs-12 index-box").get(2);
+        Elements moviesDocuments = document.getElementsByClass("col-xs-1-5 movie-item");
+        for (int i = 0; i < moviesDocuments.size(); i++) {
+            Element moviesDocument = moviesDocuments.get(i);
+            //标题
+            String title = moviesDocument.getElementsByClass("meta").first().getElementsByTag("h1").first().getElementsByTag("a").text();
+            //评分初级
+            String rankWith = moviesDocument.getElementsByClass("meta").first().getElementsByTag("h1").first().getElementsByTag("em").text();
+            String rank = "";
+            Pattern pattern = Pattern.compile("\\d.\\d");
+            Matcher matcher = pattern.matcher(rankWith);
+            //Rank
+            while (matcher.find()) {
+                rank = matcher.group();
+            }
+            //类型初级
+            Elements typesWith = moviesDocument.getElementsByClass("meta").first().getElementsByClass("otherinfo").first().getElementsByTag("a");
+            StringBuffer typeBuffer = new StringBuffer();
+            for (int j = 0; j < typesWith.size(); j++) {
+                Element singleTypeElement = typesWith.get(j);
+                String singleType = singleTypeElement.text();
+                typeBuffer.append(singleType);
+                typeBuffer.append("-");
+            }
+            //类型
+            String[] types = typeBuffer.toString().split("-");
+            //id初级
+            String idWith = moviesDocument.getElementsByClass("meta").first().getElementsByTag("h1").first().getElementsByTag("a").attr("href");
+            String id = "";
+            pattern = Pattern.compile("\\d+");
+            matcher = pattern.matcher(idWith);
+            //Id
+            while (matcher.find()) {
+                id = matcher.group();
+            }
+            //清晰度
+            String quality = moviesDocument.getElementsByTag("span").first().text();
+            //封面地址
+            String coverUrl = moviesDocument.getElementsByTag("img").first().attr("data-original");
+            MovieBean movieBean = new MovieBean();
+            KLog.e(title);
+            KLog.e(coverUrl);
+            KLog.e(id);
+            KLog.e(quality);
+            KLog.e(rank);
+            KLog.e(typeBuffer);
+            movieBean.setName(title)
+                    .setCoverUrl(coverUrl)
+                    .setID(id)
+                    .setQuality(quality)
+                    .setRank(rank)
+                    .setTypes(types);
+            list.add(movieBean);
+        }
+        return list;
+    }
+
+    /**
+     * 返回最新动作电影
+     * @param mainDocuments
+     * @return
+     */
+    private List<MovieBean> getNewActions(Document mainDocuments) {
+        List<MovieBean> list = new ArrayList<>();
+        Element document = mainDocuments.getElementsByClass("col-xs-12 index-box").get(1);
+        Elements moviesDocuments = document.getElementsByClass("col-xs-1-5 movie-item");
+        for (int i = 0; i < moviesDocuments.size(); i++) {
+            Element moviesDocument = moviesDocuments.get(i);
+            //标题
+            String title = moviesDocument.getElementsByClass("meta").first().getElementsByTag("h1").first().getElementsByTag("a").text();
+            //评分初级
+            String rankWith = moviesDocument.getElementsByClass("meta").first().getElementsByTag("h1").first().getElementsByTag("em").text();
+            String rank = "";
+            Pattern pattern = Pattern.compile("\\d.\\d");
+            Matcher matcher = pattern.matcher(rankWith);
+            //Rank
+            while (matcher.find()) {
+                rank = matcher.group();
+            }
+            //类型初级
+            Elements typesWith = moviesDocument.getElementsByClass("meta").first().getElementsByClass("otherinfo").first().getElementsByTag("a");
+            StringBuffer typeBuffer = new StringBuffer();
+            for (int j = 0; j < typesWith.size(); j++) {
+                Element singleTypeElement = typesWith.get(j);
+                String singleType = singleTypeElement.text();
+                typeBuffer.append(singleType);
+                typeBuffer.append("-");
+            }
+            //类型
+            String[] types = typeBuffer.toString().split("-");
+            //id初级
+            String idWith = moviesDocument.getElementsByClass("meta").first().getElementsByTag("h1").first().getElementsByTag("a").attr("href");
+            String id = "";
+            pattern = Pattern.compile("\\d+");
+            matcher = pattern.matcher(idWith);
+            //Id
+            while (matcher.find()) {
+                id = matcher.group();
+            }
+            //清晰度
+            String quality = moviesDocument.getElementsByTag("span").first().text();
+            //封面地址
+            String coverUrl = moviesDocument.getElementsByTag("img").first().attr("data-original");
+            MovieBean movieBean = new MovieBean();
+            KLog.e(title);
+            KLog.e(coverUrl);
+            KLog.e(id);
+            KLog.e(quality);
+            KLog.e(rank);
+            KLog.e(typeBuffer);
+            movieBean.setName(title)
+                    .setCoverUrl(coverUrl)
+                    .setID(id)
+                    .setQuality(quality)
+                    .setRank(rank)
+                    .setTypes(types);
+            list.add(movieBean);
+        }
+        return list;
+    }
+
+    /**
+     * 返回最新电视剧
+     * @param mainDocuments
+     * @return
+     */
+    private List<TVBean> getTvs(Document mainDocuments) {
+        List<TVBean> list = new ArrayList<>();
+        Element document = mainDocuments.getElementsByClass("col-xs-12 index-box").first();
+        Elements tvDocuments = document.getElementsByClass("col-xs-1-5 movie-item");
+        for (int i = 0; i < tvDocuments.size(); i++) {
+            Element tvDocument = tvDocuments.get(i);
+            //Name
+            String name = tvDocument.getElementsByTag("img").first().attr("title");
+            //CoverUrl
+            String coverUrl = tvDocument.getElementsByTag("img").first().attr("data-original");
+            //IdWith
+            String idWith = tvDocument.getElementsByTag("h1").first().getElementsByTag("a").first().attr("href");
+            //RankWith
+            String rankWith = tvDocument.getElementsByTag("h1").first().getElementsByTag("em").first().text();
+            //Rank
+            String rank = "";
+            Pattern pattern = Pattern.compile("\\d.\\d");
+            Matcher matcher = pattern.matcher(rankWith);
+            while (matcher.find()) {
+                rank = matcher.group();
+            }
+            String id = "";
+            pattern = Pattern.compile("\\d+");
+            matcher = pattern.matcher(idWith);
+            //Id
+            while (matcher.find()) {
+                id = matcher.group();
+            }
+            //Actors
+            String actors = tvDocument.getElementsByClass("otherinfo").first().text().trim();
+            TVBean bean = new TVBean();
+            bean.setName(name)
+                    .setID(id)
+                    .setRank(rank)
+                    .setActors(actors)
+                    .setCoverUrl(coverUrl);
+            list.add(bean);
+            KLog.d(id);
+            KLog.d(name);
+            KLog.d(rank);
+            KLog.d(actors);
+            KLog.d(coverUrl);
+        }
+        return list;
+    }
+
+    /**
+     *
+     *获取最新电影列表
+     * @param mainDocuments
+     * @return
+     */
+    private List<MovieBean> getNewMovies(Document mainDocuments) {
+        List<MovieBean> list = new ArrayList<>();
+        Elements movies = mainDocuments.getElementsByClass("col-xs-3 movie-item");
+        for (int i = 0; i < movies.size(); i++) {
+            Element movie = movies.get(i);
+            //标题
+            String title = movie.getElementsByClass("meta").first().getElementsByTag("h1").first().getElementsByTag("a").attr("title");
+            //评分初级
+            String rankWith = movie.getElementsByClass("meta").first().getElementsByTag("h1").first().getElementsByTag("em").text();
+            String rank = "";
+            Pattern pattern = Pattern.compile("\\d.\\d");
+            Matcher matcher = pattern.matcher(rankWith);
+            //Rank
+            while (matcher.find()) {
+                rank = matcher.group();
+            }
+            //类型初级
+            Elements typesWith = movie.getElementsByClass("meta").first().getElementsByClass("otherinfo").first().getElementsByTag("a");
+            StringBuffer typeBuffer = new StringBuffer();
+            for (int j = 0; j < typesWith.size(); j++) {
+                Element singleTypeElement = typesWith.get(j);
+                String singleType = singleTypeElement.text();
+                typeBuffer.append(singleType);
+                typeBuffer.append("-");
+            }
+            //类型
+            String[] types = typeBuffer.toString().split("-");
+            //id初级
+            String idWith = movie.getElementsByClass("meta").first().getElementsByTag("h1").first().getElementsByTag("a").attr("href");
+            String id = "";
+            pattern = Pattern.compile("\\d+");
+            matcher = pattern.matcher(idWith);
+            //Id
+            while (matcher.find()) {
+                id = matcher.group();
+            }
+            //清晰度
+            String quality = movie.getElementsByTag("span").first().text();
+            //封面地址
+            String coverUrl = movie.getElementsByTag("img").first().attr("data-original");
+            MovieBean movieBean = new MovieBean();
+            KLog.d(title);
+            KLog.d(coverUrl);
+            KLog.d(id);
+            KLog.d(quality);
+            KLog.d(rank);
+            KLog.d(typeBuffer);
+            movieBean.setName(title)
+                    .setCoverUrl(coverUrl)
+                    .setID(id)
+                    .setQuality(quality)
+                    .setRank(rank)
+                    .setTypes(types);
+            list.add(movieBean);
+        }
+
+        return list;
+    }
+
+    /**
      * 解析推荐资源
      *
      * @param mainDocuments
      * @return
      */
-    private List<RecommondBean> getRecommonds(Document mainDocuments) {
-        List<RecommondBean> list = new ArrayList<>();
+    private List<RecommendBean> getRecommonds(Document mainDocuments) {
+        List<RecommendBean> list = new ArrayList<>();
         Elements movies = mainDocuments.getElementsByClass("col-xs-3");
         for (int i = 0; i < 4; i++) {
             Element movie = movies.get(i);
@@ -85,10 +331,10 @@ public class HomeModel implements HomeContract.Model {
             while (matcher.find()) {
                 id = matcher.group();
             }
-            RecommondBean bean = new RecommondBean();
-            KLog.e(id);
-            KLog.e(title);
-            KLog.e(imageUrl);
+            RecommendBean bean = new RecommendBean();
+            KLog.d(id);
+            KLog.d(title);
+            KLog.d(imageUrl);
             bean.setId(id)
                     .setName(title)
                     .setPicUrl(imageUrl);
@@ -119,9 +365,9 @@ public class HomeModel implements HomeContract.Model {
             while (matcher.find()) {
                 url = matcher.group();
             }
-            KLog.e(url);
-            KLog.e(src);
-            KLog.e(name);
+            KLog.d(url);
+            KLog.d(src);
+            KLog.d(name);
             BannerBean bean = new BannerBean(src, name, url);
             banners.add(bean);
         }
