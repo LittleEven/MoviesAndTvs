@@ -1,5 +1,7 @@
 package com.brioal.xunyingwang.home.contract;
 
+import com.brioal.xunyingwang.bean.HomeBean;
+
 /**
  * email:brioal@foxmail.com
  * github:https://github.com/Brioal
@@ -8,16 +10,26 @@ package com.brioal.xunyingwang.home.contract;
 
 public interface HomeContract {
     interface Model {
-        void loadHomeData();
+        void loadHomeData(OnHomeBeanLoadListener loadListener);
     }
 
     interface View {
+        void showRefreshing();//正在刷新
 
+        void showHomeBean(HomeBean homeBean);//显示首页数据
+
+        void showRefreshFailed(String errorMsg);//显示刷新失败
     }
 
     interface Presenter {
         void start();
 
         void refresh();
+    }
+
+    interface OnHomeBeanLoadListener {
+        void success(HomeBean homeBean);
+
+        void failed(String errorMsg);
     }
 }

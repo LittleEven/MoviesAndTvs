@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseFragment;
+import com.brioal.xunyingwang.bean.HomeBean;
 import com.brioal.xunyingwang.home.contract.HomeContract;
 import com.brioal.xunyingwang.home.presenter.HomePresenter;
 
@@ -46,5 +47,20 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     private void initPresenter() {
         mPresenter = new HomePresenter(this);
         mPresenter.start();
+    }
+
+    @Override
+    public void showRefreshing() {
+
+    }
+
+    @Override
+    public void showHomeBean(HomeBean homeBean) {
+
+    }
+
+    @Override
+    public void showRefreshFailed(String errorMsg) {
+
     }
 }

@@ -35,7 +35,7 @@ public class HomeModel implements HomeContract.Model {
     private String URL_HOMe = "http://www.xunyingwang.com/";
 
     @Override
-    public void loadHomeData() {
+    public void loadHomeData(HomeContract.OnHomeBeanLoadListener loadListener) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(URL_HOMe)
@@ -55,8 +55,11 @@ public class HomeModel implements HomeContract.Model {
                     Document document = Jsoup.parse(content);
                     //解析轮播图
                     homeBean.setBanners(getBanners(document))//解析轮播图
-                            .setRecommondBeens(getRecommonds(document))//解析推荐资源
-
+                            .setRecommendBeans(getRecommonds(document))//解析推荐资源
+                            .setNewMovies(getNewMovies(document))//解析最新电影
+                            .setNewTvs(getTvs(document))//解析电视剧
+                            .setNewActions(getNewActions(document))//解析动作电影
+                            .setNewScience(getNewScience(document))//解析科幻电影
                     ;
                     getNewScience(document);
                 } catch (Exception e) {
@@ -69,6 +72,7 @@ public class HomeModel implements HomeContract.Model {
 
     /**
      * 返回最新科幻片
+     *
      * @param mainDocuments
      * @return
      */
@@ -133,6 +137,7 @@ public class HomeModel implements HomeContract.Model {
 
     /**
      * 返回最新动作电影
+     *
      * @param mainDocuments
      * @return
      */
@@ -197,6 +202,7 @@ public class HomeModel implements HomeContract.Model {
 
     /**
      * 返回最新电视剧
+     *
      * @param mainDocuments
      * @return
      */
@@ -247,8 +253,8 @@ public class HomeModel implements HomeContract.Model {
     }
 
     /**
+     * 获取最新电影列表
      *
-     *获取最新电影列表
      * @param mainDocuments
      * @return
      */
