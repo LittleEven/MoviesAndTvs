@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseFragment;
+import com.brioal.xunyingwang.bean.MovieBean;
+import com.brioal.xunyingwang.movie.contract.MovieContract;
+import com.brioal.xunyingwang.movie.presenter.MoviePresenter;
+
+import java.util.List;
 
 /**
  * email:brioal@foxmail.com
@@ -15,7 +20,7 @@ import com.brioal.xunyingwang.base.BaseFragment;
  * Created by Brioal on 2017/7/27.
  */
 
-public class MovieFragment extends BaseFragment {
+public class MovieFragment extends BaseFragment implements MovieContract.View {
     private static MovieFragment sFragment;
 
     public static synchronized MovieFragment getInstance() {
@@ -26,6 +31,7 @@ public class MovieFragment extends BaseFragment {
     }
 
     private View mRootView;
+    private MovieContract.Presenter mPresenter;
 
     @Nullable
     @Override
@@ -37,5 +43,26 @@ public class MovieFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initPresenter();
+    }
+
+    private void initPresenter() {
+        mPresenter = new MoviePresenter(this);
+        mPresenter.start();
+    }
+
+    @Override
+    public void showRefreshing() {
+
+    }
+
+    @Override
+    public void showMovies(List<MovieBean> list) {
+
+    }
+
+    @Override
+    public void showFailed(String errorMsg) {
+
     }
 }

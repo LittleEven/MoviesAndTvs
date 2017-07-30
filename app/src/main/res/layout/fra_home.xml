@@ -29,23 +29,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
         android:orientation="vertical">
-        <!--输入框-->
-        <EditText
-            android:id="@+id/home_et_search"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/home_et_bg"
-            android:drawableLeft="@drawable/ic_search_white"
-            android:hint="输入电影/电视剧名称"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:padding="7dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:textSize="16sp"/>
+            android:background="@color/colorPrimary">
+            <!--输入框-->
+            <EditText
+                android:id="@+id/home_et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/home_et_bg"
+                android:drawableLeft="@drawable/ic_search_white"
+                android:hint="输入电影/电视剧名称"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:padding="7dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
 
         <ScrollView
             android:id="@+id/home_scrollView"
@@ -106,7 +112,7 @@
                         android:textSize="20sp"/>
                 </LinearLayout>
                 <!--最新电影-->
-                <com.brioal.xunyingwang.view.ScrollGridView
+                <com.brioal.xunyingwang.view.ScrollRecyclerView
                     android:id="@+id/home_newMovieGrid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,7 +123,7 @@
                     android:rowCount="3"
                     android:verticalSpacing="3dp"
                     >
-                </com.brioal.xunyingwang.view.ScrollGridView>
+                </com.brioal.xunyingwang.view.ScrollRecyclerView>
                 <!--最新电视剧标题-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,13 +146,13 @@
                         android:textSize="20sp"/>
                 </LinearLayout>
                 <!--最新电视剧-->
-                <com.brioal.xunyingwang.view.ScrollGridView
+                <com.brioal.xunyingwang.view.ScrollRecyclerView
                     android:id="@+id/home_newTvGrid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
                     android:numColumns="3">
-                </com.brioal.xunyingwang.view.ScrollGridView>
+                </com.brioal.xunyingwang.view.ScrollRecyclerView>
                 <!--最新动作电影标题-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -169,13 +175,13 @@
                         android:textSize="20sp"/>
                 </LinearLayout>
                 <!--最新动作电影-->
-                <com.brioal.xunyingwang.view.ScrollGridView
+                <com.brioal.xunyingwang.view.ScrollRecyclerView
                     android:id="@+id/home_newActionGrid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
                     android:numColumns="3">
-                </com.brioal.xunyingwang.view.ScrollGridView>
+                </com.brioal.xunyingwang.view.ScrollRecyclerView>
                 <!--最新科幻电影标题-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -198,13 +204,13 @@
                         android:textSize="20sp"/>
                 </LinearLayout>
                 <!--最新科幻电影-->
-                <com.brioal.xunyingwang.view.ScrollGridView
+                <com.brioal.xunyingwang.view.ScrollRecyclerView
                     android:id="@+id/home_newScienceGrid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
                     android:numColumns="3">
-                </com.brioal.xunyingwang.view.ScrollGridView>
+                </com.brioal.xunyingwang.view.ScrollRecyclerView>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -2,6 +2,7 @@ package com.brioal.xunyingwang.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,12 +20,11 @@ import com.brioal.bannerview.OnBannerClickListener;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseFragment;
 import com.brioal.xunyingwang.bean.HomeBean;
-import com.brioal.xunyingwang.home.adapter.MovieGridAdapter;
+import com.brioal.xunyingwang.home.adapter.MovieAdapter;
 import com.brioal.xunyingwang.home.adapter.RecommendAdapter;
-import com.brioal.xunyingwang.home.adapter.TvGridAdapter;
+import com.brioal.xunyingwang.home.adapter.TvAdapter;
 import com.brioal.xunyingwang.home.contract.HomeContract;
 import com.brioal.xunyingwang.home.presenter.HomePresenter;
-import com.brioal.xunyingwang.view.ScrollGridView;
 import com.brioal.xunyingwang.view.ScrollRecyclerView;
 
 import java.util.List;
@@ -53,13 +53,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     PtrFrameLayout mRefreshLayout;
     Unbinder unbinder;
     @BindView(R.id.home_newMovieGrid)
-    ScrollGridView mMovieGrid;
+    ScrollRecyclerView mMovieRecyclerView;
     @BindView(R.id.home_newTvGrid)
-    ScrollGridView mTvGrid;
+    ScrollRecyclerView mTvRecyclerView;
     @BindView(R.id.home_newActionGrid)
-    ScrollGridView mActionGrid;
+    ScrollRecyclerView mActionRecyclerView;
     @BindView(R.id.home_newScienceGrid)
-    ScrollGridView mScienceGrid;
+    ScrollRecyclerView mScienceRecyclerView;
     @BindView(R.id.home_scrollView)
     ScrollView mScrollView;
     private HomeContract.Presenter mPresenter;
@@ -161,21 +161,25 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         mRecommendRecyclerView.setNestedScrollingEnabled(false);
         mRecommendRecyclerView.setAdapter(recommendAdapter);
         //显示最新电影
-        MovieGridAdapter movieAdapter = new MovieGridAdapter(mContext);
-        movieAdapter.showList(homeBean.getNewMovies());
-        mMovieGrid.setAdapter(movieAdapter);
+        MovieAdapter movieAdapter = new MovieAdapter(mContext);
+        movieAdapter.setList(homeBean.getNewMovies());
+        mMovieRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
+        mMovieRecyclerView.setAdapter(movieAdapter);
         //显示最新电视剧
-        TvGridAdapter tvAdapter = new TvGridAdapter(mContext);
-        tvAdapter.showList(homeBean.getNewTvs());
-        mTvGrid.setAdapter(tvAdapter);
+        TvAdapter tvAdapter = new TvAdapter(mContext);
+        tvAdapter.setList(homeBean.getNewTvs());
+        mTvRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
+        mTvRecyclerView.setAdapter(tvAdapter);
         //显示最新动作
-        MovieGridAdapter actionAdapter = new MovieGridAdapter(mContext);
-        actionAdapter.showList(homeBean.getNewActions());
-        mActionGrid.setAdapter(actionAdapter);
+        MovieAdapter actionAdapter = new MovieAdapter(mContext);
+        actionAdapter.setList(homeBean.getNewActions());
+        mActionRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
+        mActionRecyclerView.setAdapter(actionAdapter);
         //显示最新科幻
-        MovieGridAdapter scienceAdapter = new MovieGridAdapter(mContext);
-        scienceAdapter.showList(homeBean.getNewScience());
-        mScienceGrid.setAdapter(scienceAdapter);
+        MovieAdapter scienceAdapter = new MovieAdapter(mContext);
+        scienceAdapter.setList(homeBean.getNewScience());
+        mScienceRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
+        mScienceRecyclerView.setAdapter(scienceAdapter);
     }
 
     @Override
