@@ -35,7 +35,7 @@ public class HomeModel implements HomeContract.Model {
     private String URL_HOMe = "http://www.xunyingwang.com/";
 
     @Override
-    public void loadHomeData(HomeContract.OnHomeBeanLoadListener loadListener) {
+    public void loadHomeData(final HomeContract.OnHomeBeanLoadListener loadListener) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(URL_HOMe)
@@ -61,9 +61,10 @@ public class HomeModel implements HomeContract.Model {
                             .setNewActions(getNewActions(document))//解析动作电影
                             .setNewScience(getNewScience(document))//解析科幻电影
                     ;
-                    getNewScience(document);
+                    loadListener.success(homeBean);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    loadListener.failed(e.getMessage());
                 }
 
             }

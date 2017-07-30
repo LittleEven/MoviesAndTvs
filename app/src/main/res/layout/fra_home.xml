@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<in.srain.cube.views.ptr.PtrFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_refreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ProgressBar
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="正在刷新,请稍后"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+        <!--输入框-->
+        <EditText
+            android:id="@+id/home_et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/home_et_bg"
+            android:drawableLeft="@drawable/ic_search_white"
+            android:hint="输入电影/电视剧名称"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:padding="7dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="16sp"/>
+
+        <ScrollView
+            android:id="@+id/home_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical"
+                >
+
+                <!--轮播图-->
+                <com.brioal.bannerview.BannerView
+                    android:id="@+id/home_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@android:color/white">
+                </com.brioal.bannerview.BannerView>
+                <!--推荐资源标题-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="- 推荐资源 -"
+                    android:textColor="@android:color/black"/>
+                <!--推荐资源-->
+                <com.brioal.xunyingwang.view.ScrollRecyclerView
+                    android:id="@+id/home_recommendRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:background="@android:color/white">
+                </com.brioal.xunyingwang.view.ScrollRecyclerView>
+                <!--最新电影标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorAccent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:padding="4dp"
+                        android:text="最新电影"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"/>
+                </LinearLayout>
+                <!--最新电影-->
+                <com.brioal.xunyingwang.view.ScrollGridView
+                    android:id="@+id/home_newMovieGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:focusable="false"
+                    android:horizontalSpacing="3dp"
+                    android:numColumns="3"
+                    android:rowCount="3"
+                    android:verticalSpacing="3dp"
+                    >
+                </com.brioal.xunyingwang.view.ScrollGridView>
+                <!--最新电视剧标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorAccent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:padding="4dp"
+                        android:text="最新电视剧"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"/>
+                </LinearLayout>
+                <!--最新电视剧-->
+                <com.brioal.xunyingwang.view.ScrollGridView
+                    android:id="@+id/home_newTvGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:numColumns="3">
+                </com.brioal.xunyingwang.view.ScrollGridView>
+                <!--最新动作电影标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorAccent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:padding="4dp"
+                        android:text="最新动作电影"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"/>
+                </LinearLayout>
+                <!--最新动作电影-->
+                <com.brioal.xunyingwang.view.ScrollGridView
+                    android:id="@+id/home_newActionGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:numColumns="3">
+                </com.brioal.xunyingwang.view.ScrollGridView>
+                <!--最新科幻电影标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorAccent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:padding="4dp"
+                        android:text="最新科幻电影"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"/>
+                </LinearLayout>
+                <!--最新科幻电影-->
+                <com.brioal.xunyingwang.view.ScrollGridView
+                    android:id="@+id/home_newScienceGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:numColumns="3">
+                </com.brioal.xunyingwang.view.ScrollGridView>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</in.srain.cube.views.ptr.PtrFrameLayout>

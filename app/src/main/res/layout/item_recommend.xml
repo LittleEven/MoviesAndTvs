@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/item_recommend_iv_img"
+            android:layout_width="280dp"
+            android:layout_height="130dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_temp_pic"/>
+
+        <TextView
+            android:id="@+id/item_recommend_tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="2dp"
+            android:singleLine="true"
+            android:text="电影推荐"
+            android:textColor="@android:color/black"
+            android:textSize="17sp"/>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
