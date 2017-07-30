@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         initData();
         initView();
+        KLog.d();
     }
 
     private void initView() {
