@@ -1,5 +1,6 @@
 package com.brioal.xunyingwang.movie.contract;
 
+import com.brioal.xunyingwang.bean.HomeBean;
 import com.brioal.xunyingwang.bean.MovieBean;
 
 import java.util.List;

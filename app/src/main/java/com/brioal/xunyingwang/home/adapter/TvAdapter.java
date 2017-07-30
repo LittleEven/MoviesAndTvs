@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseViewHolder;
-import com.brioal.xunyingwang.bean.TVBean;
+import com.brioal.xunyingwang.bean.MovieBean;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvViewHolder> {
 
     private Context mContext;
-    private List<TVBean> mList = new ArrayList<>();
+    private List<MovieBean> mList = new ArrayList<>();
 
     public TvAdapter(Context context) {
         mContext = context;
@@ -39,7 +39,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvViewHolder> {
      *
      * @param list
      */
-    public void setList(List<TVBean> list) {
+    public void setList(List<MovieBean> list) {
         mList.clear();
         mList.addAll(list);
     }
@@ -59,7 +59,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvViewHolder> {
         return mList.size();
     }
 
-    class TvViewHolder extends BaseViewHolder<TVBean> {
+    class TvViewHolder extends BaseViewHolder<MovieBean> {
         @BindView(R.id.item_tv_iv_img)
         ImageView mIvImg;
         @BindView(R.id.item_tv_tv_title)
@@ -79,7 +79,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvViewHolder> {
         }
 
         @Override
-        public void bindView(TVBean object, int position) {
+        public void bindView(MovieBean object, int position) {
             //图片
             Glide.with(mContext).load(object.getCoverUrl()).error(R.mipmap.ic_temp_pic).into(mIvImg);
             //标题
@@ -87,12 +87,12 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.TvViewHolder> {
             //评分
             mTvRank.setText(object.getRank());
             //主演
-            mTvActors.setText(object.getActors());
+            mTvActors.setText(object.getmActors());
             //点击事件
             mRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: 2017/7/30 电影详情
+                    // TODO: 2017/7/30 电视剧详情
                 }
             });
         }
