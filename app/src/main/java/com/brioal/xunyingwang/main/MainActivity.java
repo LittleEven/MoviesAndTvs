@@ -16,6 +16,7 @@ import com.brioal.xunyingwang.home.HomeFragment;
 import com.brioal.xunyingwang.movie.MovieFragment;
 import com.brioal.xunyingwang.rank.RankFragment;
 import com.brioal.xunyingwang.tv.TvFragment;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         initData();
         initView();
+        KLog.e();
     }
 
     private void initView() {
