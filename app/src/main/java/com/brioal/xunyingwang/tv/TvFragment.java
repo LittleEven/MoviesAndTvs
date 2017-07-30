@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseFragment;
+import com.brioal.xunyingwang.bean.TVBean;
+import com.brioal.xunyingwang.tv.contract.TvContract;
+import com.brioal.xunyingwang.tv.presenter.TvPresenter;
+
+import java.util.List;
 
 /**
  * email:brioal@foxmail.com
@@ -15,7 +20,7 @@ import com.brioal.xunyingwang.base.BaseFragment;
  * Created by Brioal on 2017/7/27.
  */
 
-public class TvFragment extends BaseFragment {
+public class TvFragment extends BaseFragment implements TvContract.View {
     private static TvFragment sFragment;
 
     public static synchronized TvFragment getInstance() {
@@ -27,6 +32,8 @@ public class TvFragment extends BaseFragment {
 
     private View mRootView;
 
+    private TvContract.Presenter mPresenter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,5 +44,26 @@ public class TvFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initPresenter();
+    }
+
+    private void initPresenter() {
+        mPresenter = new TvPresenter(this);
+        mPresenter.start();
+    }
+
+    @Override
+    public void showRefreshing() {
+
+    }
+
+    @Override
+    public void showList(List<TVBean> list) {
+
+    }
+
+    @Override
+    public void showFailed(String errorMsg) {
+
     }
 }
