@@ -42,6 +42,8 @@ public class MainActivity extends BaseActivity {
         initView();
         KLog.e();KLog.e();KLog.e();
         KLog.e();KLog.e();KLog.e();
+        KLog.e();KLog.e();KLog.e();
+        KLog.e();KLog.e();KLog.e();
     }
 
     private void initView() {
