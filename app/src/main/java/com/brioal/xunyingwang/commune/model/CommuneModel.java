@@ -71,6 +71,10 @@ public class CommuneModel implements CommuneContract.Model {
                         String topUrl = communeDocument.getElementsByTag("a").first()
                                 .getElementsByClass("avatar-middle").first().attr("src");
 
+                        //ID
+                        String ID = communeDocument
+                                .getElementsByClass("list-post-title").first().getElementsByTag("a").attr("href");
+
                         CommuneBean communeBean = new CommuneBean();
                         KLog.e(title);
                         KLog.e(type);
@@ -82,7 +86,8 @@ public class CommuneModel implements CommuneContract.Model {
                                 .setType(type)
                                 .setTime(time)
                                 .setAuthor(author)
-                                .setTopUrl(topUrl);
+                                .setTopUrl(topUrl)
+                                .setID(ID);
 
                         list.add(communeBean);
                     }
