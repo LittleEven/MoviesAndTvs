@@ -41,25 +41,11 @@ public class DialogueActivity extends BaseActivity {
                 return true;
             }
         });
+        String REAL_URL = String.format(URL_DIALOGUE, mId);
+        //将内容显示到网页上面
+        mWebView.loadUrl(REAL_URL);
+        //mWebView.loadDataWithBaseURL(null, content, "text/html", "utf8", null);
 
-        OkHttpClient client = new OkHttpClient();
-        String REAL_URL=String.format(URL_DIALOGUE,mId);
-        Request request = new Request.Builder()
-                .url(REAL_URL)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            public void onFailure(Call call, IOException e) {
-                KLog.e(e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String content = response.body().string();
-
-                //将内容显示到网页上面
-                mWebView.loadDataWithBaseURL(null, content, "text/html", "utf8", null);
-            }
-        });
     }
 
     private void initID() {
