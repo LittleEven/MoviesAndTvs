@@ -68,8 +68,18 @@ public class CommuneModel implements CommuneContract.Model {
                                 .getElementsByClass("list-username").first().getElementsByTag("a").text();
 
                         //作者头像地址
-                        String topUrl = communeDocument.getElementsByTag("a").first()
+                        String topUrlWith = communeDocument.getElementsByTag("a").first()
                                 .getElementsByClass("avatar-middle").first().attr("src");
+                        String topUrlWith1="http://www.xunyingwang.com%s";
+                        String top =topUrlWith.substring(0,4);
+                        String top1="http";
+                        String topUrl="";
+                        if(!top.equals(top1)) {
+                            topUrl = String.format(topUrlWith1, topUrlWith);
+                        }else{
+                            topUrl = topUrlWith;
+                        }
+
 
                         //ID
                         String ID = communeDocument
