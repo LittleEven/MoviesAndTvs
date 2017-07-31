@@ -5,11 +5,21 @@ package com.brioal.xunyingwang.bean;
  */
 
 public class CommuneBean {
-    private String tittle = "";
-    private String author = "";
-    private String time = "";
-    private String type = "";
-    private String topUrl = "";
+    private String tittle = "";//标题
+    private String author = "";//作者
+    private String time = "";//时间
+    private String type = "";//类型
+    private String topUrl = "";//头像
+    private String ID=""; //ID
+
+    public String getID() {
+        return ID;
+    }
+
+    public CommuneBean setID(String ID) {
+        this.ID = ID;
+        return this;
+    }
 
     public String getTittle() {
         return tittle;

@@ -1,6 +1,7 @@
 package com.brioal.xunyingwang.commune.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseViewHolder;
 import com.brioal.xunyingwang.bean.CommuneBean;
+import com.brioal.xunyingwang.commune.DialogueActivity;
 import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +69,7 @@ public class CommuneAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         @Override
-        public void bindView(CommuneBean object, int position) {
+        public void bindView(final CommuneBean object, int position) {
             mCommuneAuthor = mRootView.findViewById(R.id.item_commune_tv_author);
             mCommuneTime = mRootView.findViewById(R.id.item_commune_tv_time);
             mCommuneType = mRootView.findViewById(R.id.item_commune_tv_type);
@@ -88,10 +90,15 @@ public class CommuneAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             mRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: 2017/7/30 交流圈
+                    enterDialogueDetail(object.getID());
                 }
             });
         }
+    }
+    private void enterDialogueDetail(String id) {
+        Intent intent = new Intent(mContext, DialogueActivity.class);
+        intent.putExtra("id", id);
+        mContext.startActivity(intent);
     }
 }
 
