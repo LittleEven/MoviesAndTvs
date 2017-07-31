@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/XunYinTheme">
         <activity android:name=".main.MainActivity">
+
+        </activity>
+        <activity android:name=".filter.VideoFilterActivity">
+        </activity>
+        <activity android:name=".detail.DetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

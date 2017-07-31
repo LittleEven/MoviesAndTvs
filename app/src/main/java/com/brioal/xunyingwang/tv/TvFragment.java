@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import android.support.v4.view.ViewCompat;
+
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +17,13 @@ import android.widget.ImageButton;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseFragment;
 import com.brioal.xunyingwang.bean.MovieBean;
+
 import com.brioal.xunyingwang.filter.VideoFilterActivity;
 import com.brioal.xunyingwang.home.adapter.VideoAdapter;
 import com.brioal.xunyingwang.movie.contract.MovieContract;
+
+import com.brioal.xunyingwang.home.adapter.VideoAdapter;
+
 import com.brioal.xunyingwang.tv.contract.TvContract;
 import com.brioal.xunyingwang.tv.presenter.TvPresenter;
 
@@ -36,8 +42,10 @@ public class TvFragment extends BaseFragment implements TvContract.View {
     private static TvFragment sFragment;
     private PtrFrameLayout mRefreshLayout;
     private RecyclerView mTvRecyclerView;
+
     private ImageButton mBtnFilter;
     private int REQUEST_FILTER = 0;
+
 
     public static synchronized TvFragment getInstance() {
         if (sFragment == null) {
@@ -69,6 +77,7 @@ public class TvFragment extends BaseFragment implements TvContract.View {
         super.onViewCreated(view, savedInstanceState);
         initID();
         initView();
+
         initPresenter();
     }
 
@@ -85,6 +94,7 @@ public class TvFragment extends BaseFragment implements TvContract.View {
                 mPresenter.refresh();
             }
         });
+
         mBtnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,12 +120,15 @@ public class TvFragment extends BaseFragment implements TvContract.View {
                 }
             }
         });
+
     }
 
     private void initID() {
         mRefreshLayout = mRootView.findViewById(R.id.tv_refreshLayout);
         mTvRecyclerView = mRootView.findViewById(R.id.tv_allTvGrid);
+
         mBtnFilter = mRootView.findViewById(R.id.movie_btn_filter);
+
     }
 
     private void initPresenter() {
@@ -130,9 +143,11 @@ public class TvFragment extends BaseFragment implements TvContract.View {
     }
 
     @Override
-    public void showTvs(List<MovieBean> list) {
+
+    public void showList(List<MovieBean> list) {
         mRefreshLayout.refreshComplete();
-        allTvAdapter = new VideoAdapter(mContext);
+        VideoAdapter allTvAdapter = new VideoAdapter(mContext);
+
         allTvAdapter.setList(list);
         mTvRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         mTvRecyclerView.setAdapter(allTvAdapter);
@@ -142,6 +157,7 @@ public class TvFragment extends BaseFragment implements TvContract.View {
     public void showFailed(String errorMsg) {
         mRefreshLayout.refreshComplete();
         showToast(errorMsg);
+
     }
 
 
@@ -187,5 +203,6 @@ public class TvFragment extends BaseFragment implements TvContract.View {
             mTypeSelected = data.getStringExtra("Type");
             mPresenter.start();
         }
+
     }
 }

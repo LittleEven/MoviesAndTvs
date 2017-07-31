@@ -18,7 +18,9 @@ public interface TvContract {
     interface View {
         void showRefreshing();
 
-        void showTvs(List<MovieBean> list);
+
+        void showList(List<MovieBean> list);
+
 
         void showFailed(String errorMsg);
 
