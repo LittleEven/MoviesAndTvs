@@ -3,9 +3,6 @@ package com.brioal.xunyingwang.tv.presenter;
 import android.os.Handler;
 
 import com.brioal.xunyingwang.bean.MovieBean;
-
-import com.brioal.xunyingwang.movie.contract.MovieContract;
-
 import com.brioal.xunyingwang.tv.contract.TvContract;
 import com.brioal.xunyingwang.tv.model.TvModel;
 
@@ -46,11 +43,7 @@ public class TvPresenter implements TvContract.Presenter {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-
-                        mView.showTvs(list);
-
-              
-
+                        mView.showList(list);
                     }
                 });
             }

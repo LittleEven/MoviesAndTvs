@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.support.v4.view.ViewCompat;
-
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,13 +15,8 @@ import android.widget.ImageButton;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseFragment;
 import com.brioal.xunyingwang.bean.MovieBean;
-
 import com.brioal.xunyingwang.filter.VideoFilterActivity;
 import com.brioal.xunyingwang.home.adapter.VideoAdapter;
-import com.brioal.xunyingwang.movie.contract.MovieContract;
-
-import com.brioal.xunyingwang.home.adapter.VideoAdapter;
-
 import com.brioal.xunyingwang.tv.contract.TvContract;
 import com.brioal.xunyingwang.tv.presenter.TvPresenter;
 
@@ -77,7 +70,6 @@ public class TvFragment extends BaseFragment implements TvContract.View {
         super.onViewCreated(view, savedInstanceState);
         initID();
         initView();
-
         initPresenter();
     }
 
@@ -126,9 +118,7 @@ public class TvFragment extends BaseFragment implements TvContract.View {
     private void initID() {
         mRefreshLayout = mRootView.findViewById(R.id.tv_refreshLayout);
         mTvRecyclerView = mRootView.findViewById(R.id.tv_allTvGrid);
-
-        mBtnFilter = mRootView.findViewById(R.id.movie_btn_filter);
-
+        mBtnFilter = mRootView.findViewById(R.id.tv_btn_filter);
     }
 
     private void initPresenter() {
