@@ -113,8 +113,11 @@ public class HomeModel implements HomeContract.Model {
             while (matcher.find()) {
                 id = matcher.group();
             }
-            //清晰度
-            String quality = moviesDocument.getElementsByTag("span").first().text();
+            Elements spans = moviesDocument.getElementsByTag("span");
+            String quality = "";
+            if (spans.size() > 0) {
+                quality = spans.first().text();
+            }
             //封面地址
             String coverUrl = moviesDocument.getElementsByTag("img").first().attr("data-original");
             MovieBean movieBean = new MovieBean();
@@ -179,7 +182,11 @@ public class HomeModel implements HomeContract.Model {
                 id = matcher.group();
             }
             //清晰度
-            String quality = moviesDocument.getElementsByTag("span").first().text();
+            Elements spans = moviesDocument.getElementsByTag("span");
+            String quality = "";
+            if (spans.size() > 0) {
+                quality = spans.first().text();
+            }
             //封面地址
             String coverUrl = moviesDocument.getElementsByTag("img").first().attr("data-original");
             MovieBean movieBean = new MovieBean();
@@ -295,7 +302,11 @@ public class HomeModel implements HomeContract.Model {
                 id = matcher.group();
             }
             //清晰度
-            String quality = movie.getElementsByTag("span").first().text();
+            Elements spans = movie.getElementsByTag("span");
+            String quality = "";
+            if (spans.size() > 0) {
+                 quality = spans.first().text();
+            }
             //封面地址
             String coverUrl = movie.getElementsByTag("img").first().attr("data-original");
             MovieBean movieBean = new MovieBean();
