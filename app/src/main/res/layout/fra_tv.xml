@@ -10,12 +10,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:gravity="center">
 
         <ProgressBar
             style="@style/Base.Widget.AppCompat.ProgressBar"
             android:layout_width="35dp"
-            android:layout_height="35dp" />
+            android:layout_height="35dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +25,7 @@
             android:gravity="center"
             android:text="正在刷新，请稍候"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -33,37 +34,46 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/movie_tv"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:text="电视剧列表"
-            android:textColor="@android:color/white"
-            android:textSize="19sp" />
+            android:layout_height="wrap_content">
 
-        <ScrollView
-            android:id="@+id/home_scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none">
-
-            <com.brioal.xunyingwang.view.ScrollRecyclerView
-                android:id="@+id/tv_allTvGrid"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:focusable="false"
-                android:horizontalSpacing="3dp"
-                android:numColumns="3"
-                android:rowCount="3"
-                android:verticalSpacing="3dp">
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="电视剧列表"
+                android:textColor="@android:color/white"
+                android:textSize="19sp"/>
 
-            </com.brioal.xunyingwang.view.ScrollRecyclerView>
 
-        </ScrollView>
+            <ImageButton
+                android:layout_width="35dp"
+                android:id="@+id/tv_btn_filter"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_filter"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tv_allTvGrid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:focusable="false"
+            android:horizontalSpacing="3dp"
+            android:numColumns="3"
+            android:rowCount="3"
+            android:verticalSpacing="3dp">
+
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

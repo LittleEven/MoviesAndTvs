@@ -90,13 +90,12 @@ public class TvModel implements TvContract.Model {
                         while (matcher.find()) {
                             id = matcher.group();
                         }
-
                         //清晰度
-                        String quality = moviesDocument.getElementsByTag("span").first().text();
-//                        if (quality == null) {
-//                            quality = "  ";
-//                        }
-
+                        Elements spans = moviesDocument.getElementsByTag("span");
+                        String quality = "";
+                        if (spans.size() > 0) {
+                            quality = spans.first().text();
+                        }
                         //封面地址
                         String coverUrl = moviesDocument.getElementsByTag("img").first().attr("data-original");
 

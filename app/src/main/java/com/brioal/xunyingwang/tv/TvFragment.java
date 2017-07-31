@@ -3,6 +3,7 @@ package com.brioal.xunyingwang.tv;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +11,14 @@ import android.view.ViewGroup;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseFragment;
 import com.brioal.xunyingwang.bean.MovieBean;
-import com.brioal.xunyingwang.tv.adapter.MyTvAdapter;
+import com.brioal.xunyingwang.home.adapter.VideoAdapter;
 import com.brioal.xunyingwang.tv.contract.TvContract;
 import com.brioal.xunyingwang.tv.presenter.TvPresenter;
-import com.brioal.xunyingwang.view.ScrollRecyclerView;
 
 import java.util.List;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 /**
  * email:brioal@foxmail.com
@@ -28,7 +29,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public class TvFragment extends BaseFragment implements TvContract.View {
     private static TvFragment sFragment;
     private PtrFrameLayout mRefreshLayout;
-    private ScrollRecyclerView mTvRecyclerView;
+    private RecyclerView mTvRecyclerView;
 
     public static synchronized TvFragment getInstance() {
         if (sFragment == null) {
@@ -51,9 +52,30 @@ public class TvFragment extends BaseFragment implements TvContract.View {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRefreshLayout=mRootView.findViewById(R.id.tv_refreshLayout);
-        mTvRecyclerView=mRootView.findViewById(R.id.tv_allTvGrid);
+        initID();
+        initView();
+
         initPresenter();
+    }
+
+    private void initView() {
+        mRefreshLayout.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                GridLayoutManager gridLayoutManager = (GridLayoutManager) mTvRecyclerView.getLayoutManager();
+                return gridLayoutManager.findFirstVisibleItemPosition() == 0;
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                mPresenter.refresh();
+            }
+        });
+    }
+
+    private void initID() {
+        mRefreshLayout = mRootView.findViewById(R.id.tv_refreshLayout);
+        mTvRecyclerView = mRootView.findViewById(R.id.tv_allTvGrid);
     }
 
     private void initPresenter() {
@@ -70,9 +92,9 @@ public class TvFragment extends BaseFragment implements TvContract.View {
     @Override
     public void showList(List<MovieBean> list) {
         mRefreshLayout.refreshComplete();
-        MyTvAdapter allTvAdapter = new MyTvAdapter(mContext);
+        VideoAdapter allTvAdapter = new VideoAdapter(mContext);
         allTvAdapter.setList(list);
-        mTvRecyclerView.setLayoutManager(new GridLayoutManager(mContext,3));
+        mTvRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         mTvRecyclerView.setAdapter(allTvAdapter);
     }
 

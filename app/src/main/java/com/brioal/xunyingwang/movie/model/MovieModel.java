@@ -1,6 +1,5 @@
 package com.brioal.xunyingwang.movie.model;
 
-import com.brioal.xunyingwang.bean.HomeBean;
 import com.brioal.xunyingwang.bean.MovieBean;
 import com.brioal.xunyingwang.movie.contract.MovieContract;
 import com.socks.library.KLog;
@@ -29,15 +28,18 @@ import okhttp3.Response;
  */
 
 public class MovieModel implements MovieContract.Model {
-    private String URL_MOVIES = "http://www.xunyingwang.com/movie";
+    private String URL_MOVIES = "http://www.xunyingwang.com/movie/?year=%s&rating=%s&country=%s&tag=%s&page=%s";
+
 
     @Override
-    public void loadMovies(final MovieContract.OnMoviesLoadListener loadListener) {
+    public void loadMovies(String year, String rank, String area, String type, int pager, final MovieContract.OnMoviesLoadListener loadListener) {
         //解析电影列表界面
         OkHttpClient client = new OkHttpClient();
+        String url = String.format(URL_MOVIES, year.equals("全部")?"":year, rank.equals("全部")?"":rank, area.equals("全部")?"":area, type.equals("全部")?"":type, pager);
         Request request = new Request.Builder()
-                .url(URL_MOVIES)
+                .url(url)
                 .build();
+        KLog.e(request.url());
         client.newCall(request).enqueue(new Callback() {
             public void onFailure(Call call, IOException e) {
                 KLog.e(e.getMessage());
@@ -91,7 +93,11 @@ public class MovieModel implements MovieContract.Model {
                         }
 
                         //清晰度
-                        String quality = moviesDocument.getElementsByTag("span").first().text();
+                        Elements spans = moviesDocument.getElementsByTag("span");
+                        String quality = "";
+                        if (spans.size() > 0) {
+                            quality = spans.first().text();
+                        }
 
                         //封面地址
                         String coverUrl = moviesDocument.getElementsByTag("img").first().attr("data-original");
