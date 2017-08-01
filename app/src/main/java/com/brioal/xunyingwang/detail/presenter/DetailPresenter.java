@@ -2,6 +2,7 @@ package com.brioal.xunyingwang.detail.presenter;
 
 import android.os.Handler;
 
+import com.brioal.xunyingwang.bean.DetailBean;
 import com.brioal.xunyingwang.detail.contract.DetailContract;
 import com.brioal.xunyingwang.detail.model.DetailModel;
 import com.brioal.xunyingwang.interfaces.OnNetDataLoadListener;
@@ -35,15 +36,25 @@ public class DetailPresenter implements DetailContract.Presenter {
 
     @Override
     public void refresh() {
-        mModel.loadDetail(new OnNetDataLoadListener() {
+        mModel.loadDetail(mView.getType(), mView.getId(), new OnNetDataLoadListener<DetailBean>() {
             @Override
-            public void success(Object bean) {
-
+            public void success(final DetailBean bean) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.showData(bean);
+                    }
+                });
             }
 
             @Override
-            public void failed(String errorMsg) {
-
+            public void failed(final String errorMsg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.showFailed(errorMsg);
+                    }
+                });
             }
         });
     }

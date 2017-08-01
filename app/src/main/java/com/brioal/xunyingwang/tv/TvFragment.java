@@ -83,6 +83,7 @@ public class TvFragment extends BaseFragment implements TvContract.View {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                mCurrentPage = 1;
                 mPresenter.refresh();
             }
         });
@@ -136,8 +137,8 @@ public class TvFragment extends BaseFragment implements TvContract.View {
 
     public void showList(List<MovieBean> list) {
         mRefreshLayout.refreshComplete();
-        VideoAdapter allTvAdapter = new VideoAdapter(mContext);
-
+        allTvAdapter = new VideoAdapter(mContext);
+        allTvAdapter.setType("tv");
         allTvAdapter.setList(list);
         mTvRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         mTvRecyclerView.setAdapter(allTvAdapter);
@@ -147,7 +148,6 @@ public class TvFragment extends BaseFragment implements TvContract.View {
     public void showFailed(String errorMsg) {
         mRefreshLayout.refreshComplete();
         showToast(errorMsg);
-
     }
 
 

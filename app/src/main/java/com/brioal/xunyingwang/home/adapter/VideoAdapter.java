@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseViewHolder;
 import com.brioal.xunyingwang.bean.MovieBean;
+import com.brioal.xunyingwang.detail.DetailActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -31,6 +32,12 @@ public class VideoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public VideoAdapter(Context context) {
         mContext = context;
+    }
+
+    private String mType = "movie";
+
+    public void setType(String type) {
+        mType = type;
     }
 
     /**
@@ -91,7 +98,7 @@ public class VideoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         @Override
-        public void bindView(MovieBean object, int position) {
+        public void bindView(final MovieBean object, int position) {
             //图片
             Glide.with(mContext).load(object.getCoverUrl()).error(R.mipmap.ic_temp_pic).into(mIvImg);
             //标题
@@ -142,7 +149,7 @@ public class VideoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             mRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: 2017/7/30 电影详情
+                    DetailActivity.enterDetail(mContext, object.getID(), mType);
                 }
             });
         }

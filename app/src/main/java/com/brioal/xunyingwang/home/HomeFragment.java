@@ -20,6 +20,7 @@ import com.brioal.bannerview.OnBannerClickListener;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseFragment;
 import com.brioal.xunyingwang.bean.HomeBean;
+import com.brioal.xunyingwang.detail.DetailActivity;
 import com.brioal.xunyingwang.home.adapter.VideoAdapter;
 import com.brioal.xunyingwang.home.adapter.RecommendAdapter;
 import com.brioal.xunyingwang.home.contract.HomeContract;
@@ -146,7 +147,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                     .initViewPager(bannerBeans, 2000, new OnBannerClickListener() {
                         @Override
                         public void click(BannerBean bannerBean, int i) {
-                            // TODO: 2017/7/30  电影详情
+                            DetailActivity.enterDetail(mContext, bannerBean.getIndex(),"movie");
                         }
                     }).setGallery(true).build(getActivity().getSupportFragmentManager());
         }
@@ -159,7 +160,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         mRecommendRecyclerView.setHasFixedSize(true);
         mRecommendRecyclerView.setNestedScrollingEnabled(false);
         mRecommendRecyclerView.setAdapter(recommendAdapter);
-
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
         gridLayoutManager.setAutoMeasureEnabled(true);
 
@@ -175,6 +175,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         //显示最新电视剧
         VideoAdapter tvAdapter = new VideoAdapter(mContext);
         tvAdapter.setList(homeBean.getNewTvs());
+        tvAdapter.setType("tv");
         GridLayoutManager tvGridLayout = new GridLayoutManager(mContext, 3);
         tvGridLayout.setAutoMeasureEnabled(true);
         mTvRecyclerView.setLayoutManager(tvGridLayout);
