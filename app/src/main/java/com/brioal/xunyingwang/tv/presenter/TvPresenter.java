@@ -37,7 +37,7 @@ public class TvPresenter implements TvContract.Presenter {
 
     @Override
     public void refresh() {
-        mModel.loadTvs(new TvContract.OnTvLoadListener() {
+        mModel.loadTvs(mView.getYear(), mView.getRank(), mView.getArea(), mView.getType(), mView.getPage(),new TvContract.OnTvLoadListener() {
             @Override
             public void success(final List<MovieBean> list) {
                 mHandler.post(new Runnable() {
@@ -58,5 +58,32 @@ public class TvPresenter implements TvContract.Presenter {
                 });
             }
         });
+    }
+
+    @Override
+    public void loadMore() {
+       mModel.loadTvs(mView.getYear(), mView.getRank(), mView.getArea(), mView.getType(), mView.getPage(), new TvContract.OnTvLoadListener() {
+           @Override
+           public void success(final List<MovieBean> list) {
+               mHandler.post(new Runnable() {
+                   @Override
+                   public void run() {
+                       mView.addTvs(list);
+                   }
+               });
+           }
+
+           @Override
+           public void failed(final String errorMsg) {
+               mHandler.post(new Runnable() {
+                   @Override
+                   public void run() {
+                       mView.showFailed(errorMsg);
+                   }
+               });
+           }
+       });
+
+
     }
 }

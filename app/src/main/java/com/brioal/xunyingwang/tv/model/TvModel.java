@@ -28,16 +28,19 @@ import okhttp3.Response;
  */
 
 public class TvModel implements TvContract.Model {
-    private String URL_TVS = "http://www.xunyingwang.com/tv";
+    private String URL_TVS = "http://www.xunyingwang.com/tv?year=%s&rating=%s&country=%s&tag=%s&page=%s";
 
 
     @Override
-    public void loadTvs(final TvContract.OnTvLoadListener loadListener) {
+
+    public void loadTvs(String year, String rank, String area, String type, int pager, final TvContract.OnTvLoadListener loadListener) {
         //解析电视剧列表
         //参照首页Model
         OkHttpClient client = new OkHttpClient();
+        String url = String.format(URL_TVS, year.equals("全部")?"":year, rank.equals("全部")?"":rank, area.equals("全部")?"":area, type.equals("全部")?"":type, pager);
+        KLog.e(url);
         Request request = new Request.Builder()
-                .url(URL_TVS)
+                .url(url)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             public void onFailure(Call call, IOException e) {
@@ -122,4 +125,6 @@ public class TvModel implements TvContract.Model {
             }
         });
     }
+
+
 }

@@ -2,7 +2,6 @@ package com.brioal.xunyingwang.detail.model;
 
 import com.brioal.xunyingwang.bean.DetailBean;
 import com.brioal.xunyingwang.bean.DownLoadBean;
-import com.brioal.xunyingwang.bean.VideoFunData;
 import com.brioal.xunyingwang.detail.contract.DetailContract;
 import com.brioal.xunyingwang.interfaces.OnNetDataLoadListener;
 import com.socks.library.KLog;
@@ -29,19 +28,21 @@ import okhttp3.Response;
  */
 
 public class DetailModel implements DetailContract.Model {
-    private String URL_DETAIL = "http://www.xunyingwang.com/movie/467369.html";
+    private String URL_DETAIL = "http://www.xunyingwang.com/%s/%s.html";
+
 
     @Override
-    public void loadDetail(final OnNetDataLoadListener loadListener) {
+    public void loadDetail(String type, String id, final OnNetDataLoadListener<DetailBean> loadListener) {
         if (loadListener == null) {
             return;
         }
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(URL_DETAIL)
-                    .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+                    .url(String.format(URL_DETAIL, type, id))
+                    .addHeader("User-Agent", "Mozilla/5.0 (Linux; Android 5.1.1; letv x501 Build/LMY48Z) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36")
                     .build();
+            KLog.e("DETAIL_URL:"+request.url());
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -54,20 +55,20 @@ public class DetailModel implements DetailContract.Model {
                     KLog.d(content);
                     Document document = Jsoup.parse(content);
                     DetailBean detailBean = new DetailBean();
-                    detailBean.setYear(getYear(document))
-                            .setCoverUrl(getConver(document))
-                            .setUpdateTime(getUpdateTime(document))
-                            .setVideoFunData(getFunData(document))
+                    detailBean
+                            .setCoverUrl(getCover(document))
                             .setInfo(getInfo(document))
-                            .setTypes(getTypes(document))
-                            .setDownLoadBean(getPanBean(document))
                             .setOnLineUrl(getOnLineUrl(document))
+                            .setData(getData(document))
+                            .setDownLoadBean(getPanBean(document))
                     ;
+                    loadListener.success(detailBean);
 
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
+            loadListener.failed(e.getMessage());
         }
     }
 
@@ -80,7 +81,7 @@ public class DetailModel implements DetailContract.Model {
     private String getOnLineUrl(Document document) {
         String url = "";
         try {
-            url = document.select("online-play-btn").first().attr("href");
+            url = document.getElementsByClass("online-play-btn").first().attr("href");
             if (url != null && !url.isEmpty()) {
                 return url;
             }
@@ -100,16 +101,15 @@ public class DetailModel implements DetailContract.Model {
     private List<DownLoadBean> getPanBean(Document document) {
         List<DownLoadBean> list = new ArrayList<>();
         try {
-            Elements elements = document.select("table").get(1).select("tr");
+            Elements elements = document.getElementsByClass("text-break");
             for (int i = 0; i < elements.size(); i++) {
                 Element tr = elements.get(i);
-                String type = tr.select("td").first().select("span").text();
-                String url = tr.select("td").get(1).getElementsByTag("a").first().attr("href");
-                String pass = tr.select("td").get(1).select("strong").text();
+                String title = tr.getElementsByTag("a").first().text();
+                String url = tr.getElementsByTag("a").first().attr("href");
                 DownLoadBean bean = new DownLoadBean();
-                bean.setType(type)
+                bean.setTitle(title)
                         .setUrl(url)
-                        .setPass(pass);
+                ;
                 list.add(bean);
             }
             return list;
@@ -125,15 +125,11 @@ public class DetailModel implements DetailContract.Model {
      * @param document
      * @return
      */
-    private String[] getTypes(Document document) {
-        String[] types = null;
+    private String getData(Document document) {
+        String types = null;
         try {
-            Elements elements = document.getElementsByClass("col-xs-12 tags").select("a");
-            types = new String[elements.size()];
-            for (int i = 0; i < elements.size(); i++) {
-                String value = elements.get(i).text();
-                types[i] = value.substring(1, value.length() - 1);
-            }
+            Element elements = document.getElementsByClass("am-u-sm-7").first();
+            types = elements.text();
             return types;
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,7 +146,7 @@ public class DetailModel implements DetailContract.Model {
     private String getInfo(Document document) {
         String info = "";
         try {
-            info = document.getElementsByClass("col-xs-12 movie-introduce").first().getElementsByTag("p").text();
+            info = document.getElementsByClass("am-u-sm-12").first().text();
             if (info != null && !info.isEmpty()) {
                 return info;
             }
@@ -161,99 +157,17 @@ public class DetailModel implements DetailContract.Model {
         return "";
     }
 
+
     /**
-     * 获取表格数据
+     * 获取封面下载地址
      *
      * @param document
      * @return
      */
-    private VideoFunData getFunData(Document document) {
-        try {
-
-            Elements elements = document.select("table").first().select("tbody").select("tr");
-            VideoFunData data = new VideoFunData();
-            for (int i = 0; i < elements.size(); i++) {
-                Element tr = elements.get(i);
-                String key = tr.select("td").first().select("span").text();
-                String value = tr.select("td").get(1).select("a").text();
-                String value1 = tr.select("td").get(1).text();
-                switch (key) {
-                    case "导演":
-                        data.setDirector(value.isEmpty()?value1:value);
-                        break;
-                    case "编剧":
-                        data.setEditor(value.isEmpty()?value1:value);
-                        break;
-                    case "主演":
-                        data.setActors(value.isEmpty()?value1:value);
-                        break;
-                    case "类型":
-                        data.setType(value.isEmpty()?value1:value);
-                        break;
-                    case "地区":
-                        data.setArea(value.isEmpty()?value1:value);
-                        break;
-                    case "语言":
-                        data.setLanguage(value.isEmpty()?value1:value);
-                        break;
-                    case "上映时间":
-                        data.setTime(value.isEmpty()?value1:value);
-                        break;
-                    case "片长":
-                        data.setLength(value.isEmpty()?value1:value);
-                        break;
-                    case "又名":
-                        data.setAnotherName(value.isEmpty()?value1:value);
-                        break;
-                    case "评分":
-                        data.setRank(value.isEmpty()?value1:value);
-                        break;
-                }
-            }
-            return data;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private String getUpdateTime(Document document) {
-        String time = "";
-        try {
-            time = document.getElementsByClass("col-xs-4 padding-right-0").first().getElementsByTag("em").first().text();
-            if (time != null && !time.isEmpty()) {
-                return time;
-            }
-            return "";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-    /**
-     * 解析年份
-     *
-     * @param document
-     * @return
-     */
-    private String getYear(Document document) {
-        String year = "";
-        try {
-            year = document.getElementsByClass("year").first().text();
-            if (year != null && !year.isEmpty()) {
-                return year;
-            }
-            return "";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-    private String getConver(Document document) {
+    private String getCover(Document document) {
         String url = "";
         try {
-            url = document.getElementsByClass("img-thumbnail").first().attr("src");
+            url = document.getElementsByClass("img-responsive").first().attr("src");
             if (url != null && !url.isEmpty()) {
                 return url;
             }

@@ -7,16 +7,15 @@ package com.brioal.xunyingwang.bean;
  */
 
 public class DownLoadBean {
-    private String mType = "磁力";//地址类型
+    private String mTitle = "磁力";//地址类型
     private String mUrl = "";//网盘地址
-    private String mPass = "";//网盘密码
 
-    public String getType() {
-        return mType;
+    public String getTitle() {
+        return mTitle;
     }
 
-    public DownLoadBean setType(String type) {
-        mType = type;
+    public DownLoadBean setTitle(String title) {
+        mTitle = title;
         return this;
     }
 
@@ -29,12 +28,4 @@ public class DownLoadBean {
         return this;
     }
 
-    public String getPass() {
-        return mPass;
-    }
-
-    public DownLoadBean setPass(String pass) {
-        mPass = pass;
-        return this;
-    }
 }

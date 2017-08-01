@@ -82,6 +82,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                mCurrentPage = 1;
                 mPresenter.refresh();
             }
         });

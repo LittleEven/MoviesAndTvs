@@ -1,5 +1,6 @@
 package com.brioal.xunyingwang.detail.contract;
 
+import com.brioal.xunyingwang.bean.DetailBean;
 import com.brioal.xunyingwang.interfaces.OnNetDataLoadListener;
 
 /**
@@ -10,15 +11,19 @@ import com.brioal.xunyingwang.interfaces.OnNetDataLoadListener;
 
 public interface DetailContract {
     interface Model {
-        void loadDetail(OnNetDataLoadListener loadListener);
+        void loadDetail(String type, String id, OnNetDataLoadListener<DetailBean> loadListener);
     }
 
     interface View {
         void showRefreshing();
 
-        void showData();
+        void showData(DetailBean bean);
 
         void showFailed(String errorMsg);
+
+        String getId();
+
+        String getType();
 
     }
 
